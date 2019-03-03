@@ -27,8 +27,8 @@
    "content_scripts": [
    {
      "matches": ["http://*/*", "https://*/*"],
-     "css": ["myStyles.css"],
-     "js": ["contentScript.js"]
+     "css": ["myStyles.css", "jBox.all.min.css"],
+     "js": ["contentScript.js", "jquery-3.3.1.min.js", "jBox.all.min.js"]
    }
  ]
 }
