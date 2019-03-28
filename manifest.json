@@ -28,7 +28,7 @@
    {
      "matches": ["http://*/*", "https://*/*"],
      "css": ["myStyles.css", "tipped.css"],
-     "js": ["jquery-3.3.1.min.js", "tipped.js", "contentScript.js"]
+     "js": ["jquery-3.3.1.min.js", "tipped.js", "alias.js", "explanations.js", "contentScript.js"]
    }
  ]
 }

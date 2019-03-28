@@ -8,26 +8,14 @@
 
 // 	"Likelihood": "The likelihood function answers the question of 'given some probability model p(x), or in the conditional case, p(y|X), how likely is the data in our sample, given that model'. Mathematically, it just means multiplying p(x) for all of our observed x together. When we're learning the parameters of a distribution, we often optimize those parameters to maximize the likelihood, that is, to make it so that the true, observed data would have has high probability under our model. (This is what Maximum Likelihood Estimation, or MLE, is.). The log likelihood is just this function, but summing the log probabilities instead of multiplying the normal probabilities; typically done to avoid really small numbers that floating points have difficulty handling "
 
-$.getJSON("explanations.json", function(data) {
-  var explanations = data;
-})
+//   var explanations = data;
+
+//   var aliases = {
+// 	"KL Divergence": ["KL divergence"], //Kullback-Leibler Divergence","Kullback-Leibler divergence",
+// 	"Expected Value": ["Expectation"], 
+// 	"Likelihood": ["Likelihood Function", "Log Likelihood"],
+// 	"Jenson-Shannon Divergence": []
 // }
-// new jBox('Tooltip', {
-//   attach: '.tooltip', 
-// });
-
-// chrome.tabs.executeScript(null, {file: "tipped.js"}, function(){
-//    Tipped.create('.tipped-tooltip', "test tooltip");
-// });
-
-
-
-var aliases = {
-	"KL Divergence": ["KL divergence"], //Kullback-Leibler Divergence","Kullback-Leibler divergence",
-	"Expected Value": ["Expectation"], 
-	"Likelihood": ["Likelihood Function", "Log Likelihood"],
-	"Jenson-Shannon Divergence": []
-}
 
 
 function replaceMatchingTerm(termName, explanation) {
@@ -53,4 +41,17 @@ for (var key in explanations) {
 } 
 
 Tipped.create('.tooltip', {close: true, hideOn: false, maxWidth: 400});
+
+// }
+// new jBox('Tooltip', {
+//   attach: '.tooltip', 
+// });
+
+// chrome.tabs.executeScript(null, {file: "tipped.js"}, function(){
+//    Tipped.create('.tipped-tooltip', "test tooltip");
+// });
+
+
+
+
 

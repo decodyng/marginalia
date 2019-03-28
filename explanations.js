@@ -1,4 +1,4 @@
-{
+var explanations = {
 	"KL Divergence": "The KL Divergence (or Kullback-Leibler Divergence) is a way of measuring how similar one probability distribution is to another. KLD is asymmetric, which means KL(P, Q) isn't the same as KL(Q, P). Mathematically, KLD(P, Q) calculates the weighted average of the difference in log probability between P(X) and Q(X), where the weights come from the probability of X under P(X). (In other words, you're taking an expectation under P(X))",
 
 	"Jenson-Shannon Divergence": "The Jenson-Shannon divergence is a similarity measure between distributions that is built in the Kullback-Leibler or KL Divergence, but that is designed to be symmetric, where the KLD of two distributions differs depends on the order of the arguments. Jenson-Shannon is calculated by creating a midpoint distribution M, that averages A and B, and then taking an average of KL(P, M) and KL(Q, M).",
