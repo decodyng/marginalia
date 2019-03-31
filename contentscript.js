@@ -53,7 +53,6 @@ var aliases_url = chrome.extension.getURL('aliases.json');
  	
  	$.getJSON(aliases_url, function(aliases) {
  		chrome.storage.sync.set({"num_keys_found":0})
-		chrome.storage.sync.set({"keysAndExplanations": {"None yet found": "--"}})
 
  		var numKeysFound = 0; 
  		var keysFound = []; 

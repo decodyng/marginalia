@@ -25,17 +25,25 @@ function addExplanations(explanationDict) {
   }
 }
 
-
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-  for (var key in changes) {
-    if (key == 'keysAndExplanations') {
-      console.log("keysAndExplanations listener triggered");
-      var storageChange = changes[key];
-      var newKeyValue = storageChange.newValue;
-      addExplanations(newKeyValue)
-    }
+//var defaultValue = {"- - -": "- - -"}
+chrome.storage.sync.get("keysAndExplanations", function(data) {
+  console.log(data.keysAndExplanations);
+  if (data.keysAndExplanations !== null) {
+    addExplanations(data.keysAndExplanations);
   }
-} )
+  
+  
+})
+// chrome.storage.onChanged.addListener(function(changes, namespace) {
+//   for (var key in changes) {
+//     if (key == 'keysAndExplanations') {
+//       console.log("keysAndExplanations listener triggered");
+//       var storageChange = changes[key];
+//       var newKeyValue = storageChange.newValue;
+//       addExplanations(newKeyValue)
+//     }
+//   }
+// } )
 
 
 
