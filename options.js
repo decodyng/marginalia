@@ -2,22 +2,40 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-'use strict';
-let page = document.getElementById('buttonDiv');
 
-const kButtonColors = ['#3aa757', '#e8453c', '#f9bb2d', '#4688f1'];
 
-function constructOptions(kButtonColors) {
-  for (let item of kButtonColors) {
-    let button = document.createElement('button');
-    button.style.backgroundColor = item;
-    button.addEventListener('click', function() {
-      chrome.storage.sync.set({color: item}, function() {
-        console.log('color is ' + item);
-      })
-    });
-    page.appendChild(button);
+
+function addExplanations(explanationDict) {
+  console.log(`Adding: ${explanationDict} to div`)
+  var topDiv = document.getElementById('explanationsDiv');
+  topDiv.classList.add("nonsense")
+
+  for (var key in explanationDict) {
+    
+    var newTitleElement = document.createElement('h3')
+    var newTitleText = document.createTextNode(key)
+    newTitleElement.appendChild(newTitleText)
+
+    var newTextElement = document.createElement('p')
+    var newText = document.createTextNode(explanationDict[key])
+    newTextElement.appendChild(newText)
+
+    topDiv.appendChild(newTitleElement)
+    topDiv.appendChild(newTextElement)
   }
-
 }
-constructOptions(kButtonColors);
+
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (var key in changes) {
+    if (key == 'keysAndExplanations') {
+      console.log("keysAndExplanations listener triggered");
+      var storageChange = changes[key];
+      var newKeyValue = storageChange.newValue;
+      addExplanations(newKeyValue)
+    }
+  }
+} )
+
+
+

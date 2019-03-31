@@ -22,25 +22,91 @@ function replaceMatchingTerm(termName, explanation) {
 	console.log(`Checking for instances of ${termName}`)
 	var elts = document.getElementsByTagName('p');
 	var safeTermName = termName.replace(/ /g, '-');
-	var fullClass = safeTermName + " ml-term" 
-	var spanTemplate = `<span class="tooltip" title="${explanation}">${termName}</span>`
+	var termRegEx = new RegExp(termName, "gi");
+	var fullClass = safeTermName + " ml-term";
+	
+	var numFound = 0; 
+	function spanReplacer(match, p1, p2, p3, offset, string) {
+		return `<span class="tooltip" title="${explanation}">${match}</span>`
+		console.log(`${match} found`)
+		}
+
 	for (let e of elts) {
-		e.innerHTML = e.textContent.replace(termName, spanTemplate)
+		console.log("new paragraph")
+		var matchedTerms = e.textContent.match(termRegEx); 
+
+		if (matchedTerms !== null) {
+			e.innerHTML = e.textContent.replace(termRegEx, spanReplacer);
+			numFound += 1; 
+
+			
+		}
+		
 	}
+	return numFound;
 };
 
 
-for (var key in explanations) {
-	var explanation_text = explanations[key]
-	var num_aliases = aliases[key].length
-	for (var i = 0; i < num_aliases; i++) {
-		replaceMatchingTerm(aliases[key][i], explanation_text);
-		replaceMatchingTerm(aliases[key][i].toLowerCase(), explanation_text);
-	}
-	replaceMatchingTerm(key, explanation_text);
-} 
+var explanations_url = chrome.extension.getURL('explanations.json');
+var aliases_url = chrome.extension.getURL('aliases.json');
+ $.getJSON(explanations_url, function(explanations) {
+ 	
+ 	$.getJSON(aliases_url, function(aliases) {
+ 		chrome.storage.sync.set({"num_keys_found":0})
+		chrome.storage.sync.set({"keysAndExplanations": {"None yet found": "--"}})
 
-Tipped.create('.tooltip', {close: true, hideOn: false, maxWidth: 400});
+ 		var numKeysFound = 0; 
+ 		var keysFound = []; 
+ 		for (var key in explanations) {
+			var explanation_text = explanations[key]
+			var num_aliases = aliases[key].length
+			var numFoundKey = 0; 
+			for (var i = 0; i < num_aliases; i++) {
+
+				numFoundKey += replaceMatchingTerm(aliases[key][i], explanation_text);
+			}
+			numFoundKey += replaceMatchingTerm(key, explanation_text);
+			if (numFoundKey > 0) {
+				keysFound.push(key); 
+				numKeysFound += 1; 
+			}
+		} 
+
+		Tipped.create('.tooltip', {close: true, 
+								   hideAfter: 1000,
+								   showDelay: 400,
+								  // hideOn: false, 
+								   maxWidth: 400});
+
+		var keysAndExplanations = {}
+		var arrayLength = keysFound.length;
+		for (var i = 0; i < arrayLength; i++) {
+			key = keysFound[i]
+			keysAndExplanations[key] = explanations[key]
+		}
+		chrome.storage.sync.set({"num_keys_found":numKeysFound}, function() {
+			console.log(`${numKeysFound} keys found on page`)
+		})
+
+		chrome.storage.sync.set({"keysAndExplanations": keysAndExplanations}, function() {
+			console.log("Keys and explanations:")
+			console.log(keysAndExplanations)
+		})
+
+
+ 	})
+
+ })
+
+
+ 
+// chrome.storage.sync.set / get 
+// chrome.storage.onChanged
+// changes, key 
+
+
+
+
 
 // }
 // new jBox('Tooltip', {

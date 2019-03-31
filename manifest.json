@@ -7,15 +7,15 @@
       "scripts": ["background.js"],
       "persistent": false
     },
-    "page_action": {
-      "default_popup": "popup.html", 
-      "default_icon": {
-        "16": "images/get_started16.png",
-        "32": "images/get_started32.png",
-        "48": "images/get_started48.png",
-        "128": "images/get_started128.png"
-      }
-    },
+  "browser_action": {
+    "default_popup": "options.html",
+    "default_icon": {
+      "16": "images/sq_16.png",
+      "32": "images/sq_32.png",
+      "48": "images/sq_48.png",
+      "128": "images/sq_128.png"
+    }
+  },
   "icons": {
       "16": "images/sq_16.png",
       "32": "images/sq_32.png",
@@ -24,11 +24,15 @@
     },
   "manifest_version": 2, 
   "options_page": "options.html", 
+  "web_accessible_resources": [
+    "explanations.json", 
+    "aliases.json"
+],
    "content_scripts": [
    {
      "matches": ["http://*/*", "https://*/*"],
      "css": ["myStyles.css", "tipped.css"],
-     "js": ["jquery-3.3.1.min.js", "tipped.js", "alias.js", "explanations.js", "contentScript.js"]
+     "js": ["jquery-3.3.1.min.js", "tipped.js", "contentScript.js"]
    }
  ]
 }

@@ -1,5 +1,7 @@
 .tooltip {
-	background-color: pink;
+	border-color: pink;
+	border-style: dotted;
+	border-width: 2px;
 }
 
 .tpd-skin-dark .tpd-content{
